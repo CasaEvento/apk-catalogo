@@ -1,0 +1,6 @@
+{
+  "name": "Catálogo Móvil",
+  "description": "Automatiza la creación de fichas técnicas de productos con inteligencia artificial de Gemini, lienzo interactivo y sincronización con Google Workspace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
