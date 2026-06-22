@@ -1,21 +1,60 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Catálogo Móvil 📱
 
-# Run and deploy your AI Studio app
+App Android que automatiza la creación de fichas técnicas de productos usando IA (Gemini), lienzo interactivo y sincronización con Google Workspace.
 
-This contains everything you need to run your app locally.
+[![Android CI](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/android.yml/badge.svg)](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/android.yml)
 
-View your app in AI Studio: https://ai.studio/apps/cf44071d-8bc8-48de-9aac-652cf91d9c06
+---
 
-## Run Locally
+## Requisitos
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+- Android Studio Ladybug (2024.2) o superior
+- JDK 17
+- Android SDK 35
 
+---
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## Configuración local
+
+1. Clona el repositorio
+2. Crea un archivo `.env` en la raíz del proyecto:
+   ```
+   GEMINI_API_KEY=tu_clave_aquí
+   ```
+3. Abre el proyecto en Android Studio y ejecútalo en un emulador o dispositivo físico.
+
+> El archivo `.env` está en `.gitignore`; nunca lo subas al repositorio.
+
+---
+
+## Configurar GitHub Actions (CI/CD)
+
+Ve a **Settings → Secrets and variables → Actions** en tu repositorio y agrega:
+
+| Secret | Descripción |
+|---|---|
+| `GEMINI_API_KEY` | Tu API key de Gemini (obligatorio) |
+| `KEYSTORE_BASE64` | Tu keystore en base64: `base64 -i my-upload-key.jks` (opcional, para release) |
+| `STORE_PASSWORD` | Contraseña del keystore (opcional) |
+| `KEY_PASSWORD` | Contraseña de la key (opcional) |
+
+El workflow de CI compila el **debug APK** automáticamente en cada push. El **release APK** se compila solo cuando los secrets del keystore están presentes.
+
+---
+
+## Estructura del proyecto
+
+```
+├── app/
+│   ├── src/main/java/com/example/
+│   │   ├── data/           # Room DB, repositorios, servicios Gemini y Google Workspace
+│   │   ├── presentation/   # ViewModels
+│   │   └── ui/             # Pantallas Compose, canvas, tema
+│   └── build.gradle.kts
+├── gradle/
+│   └── libs.versions.toml  # Catálogo de versiones
+├── .github/
+│   └── workflows/
+│       └── android.yml     # Pipeline CI/CD
+└── .env.example            # Plantilla de variables de entorno
+```
